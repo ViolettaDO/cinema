@@ -12,7 +12,7 @@
  * к справочнику ( у нас это пока заглушка const genres );
  */
 
-const mock = [
+const mock_Films = [
     {
         name: "Человек-паук",
         start: "10:00",
@@ -26,7 +26,8 @@ const mock = [
         fb: "https://fb.com",
         twitter: "https://twitter.com",
         behance: "https://www.behance.net",
-        dribbble: "https://dribbble.com/"
+        dribbble: "https://dribbble.com/",
+        price: 170
     },
     {
         name: "Собачья жизнь 2",
@@ -41,7 +42,8 @@ const mock = [
         fb: "https://fb.com",
         twitter: "https://twitter.com",
         behance: "https://www.behance.net",
-        dribbble: "https://dribbble.com/"
+        dribbble: "https://dribbble.com/",
+        price: 240
     },
     {
         name: "История игрушек 4",
@@ -56,7 +58,8 @@ const mock = [
         fb: "https://fb.com",
         twitter: "https://twitter.com",
         behance: "https://www.behance.net",
-        dribbble: "https://dribbble.com/"
+        dribbble: "https://dribbble.com/",
+        price: 130
     },
     {
         name: "Люди в чёрном: Интернэшнл",
@@ -71,7 +74,8 @@ const mock = [
         fb: "https://fb.com",
         twitter: "https://twitter.com",
         behance: "https://www.behance.net",
-        dribbble: "https://dribbble.com/"
+        dribbble: "https://dribbble.com/",
+        price: 450
     }
 ];
 
@@ -118,22 +122,6 @@ const ganars = [
     'Мультфильм'  // 5
   ]
 */
-
-//массивы для хранения отсортированных данных
-let filmsNew = [],
-    filmsHire = [];
-
-for (let i = 0; i < mock.length; i++) {
-    let currentFilm = mock[i];
-
-    if (currentFilm.filmHire) {
-        filmsHire.push(currentFilm);
-    }
-
-    if (currentFilm.filmNew) {
-        filmsNew.push(currentFilm);
-    }
-}
 
 //объект-обертка для универсализации работы с данными
 const film = {
@@ -182,10 +170,12 @@ const film = {
         let filmName = this.name,
             filmStart = this.start,
             filmGanars = film.getGanre.apply(this),
+            filmPrice =  this.price,
             filmHTML = `
             <td class="movie-list__table__cell movie-list__table__cell_body movie-list__table__cell_body_time">${filmStart}</td>
             <td class="movie-list__table__cell movie-list__table__cell_body movie-list__table__cell_body_movieheader">${filmName}</td>
             <td class="movie-list__table__cell movie-list__table__cell_body movie-list__table__cell_body_order">${filmGanars}</td>
+            <td class="movie-list__table__cell movie-list__table__cell_body movie-list__table__cell_body_order">${filmPrice}</td>
           `;
         return filmHTML;
     },
@@ -235,37 +225,132 @@ const film = {
                 </div>
           `;
         return filmHTML;
+    },
+
+    renderFilmOrder: function() {
+        document.getElementsByClassName("order-form-filmtitle")[0].innerHTML = this.name;
+        document.getElementsByClassName("order-form-filmstart")[0].innerHTML = this.start;
+        document.getElementsByClassName("order-form-filmprice")[0].innerHTML = this.price;
+        document.getElementsByClassName("order-form-filmgenre")[0].innerHTML = film.getGanre.apply(this);
+        popup.classList.remove('hidden');
+        let placepanel = document.getElementsByClassName("order-form-seats")[0];
+        placepanel.innerHTML = "";
+        let filmplaces = getPlaces(this.price);
+        for (let i in filmplaces) {
+            let placeDOM = document.createElement("div");
+            let place = filmplaces[i];
+            placeDOM.classList.add("order-form-seats-place");
+            if (place.state)
+                placeDOM.classList.add("order-form-seats-place--busy");
+            else
+                placeDOM.classList.add("order-form-seats-place--free");
+            placeDOM.addEventListener("mouseover", mouseOverPlace.bind(place));
+            placeDOM.addEventListener("mouseout", mouseOutPlace.bind(place));
+            placeDOM.addEventListener("contextmenu", pricePlace.bind(place));
+            placeDOM.addEventListener("click", function() {
+                if (checkPlace.bind(place)()) {
+                    selectPlace.bind(place)();
+                    colorPlace.bind(place)();
+                }
+                mouseOutPlace.bind(place)
+            });
+            placeDOM.innerHTML = place.num;
+            place.DOM = placeDOM;
+
+            placepanel.appendChild(placeDOM);
+        }
     }
 };
 
-let tableDOM = document.getElementById("movie-shedule");
-for (let i = 0; i < filmsHire.length; i++) {
-    let currentFilm = filmsHire[i],
-        filmRowHTML = film.renderFilmRow.bind(currentFilm)(),
-        tr = document.createElement("tr");
-        tr.classList.add('movie-list__table__row');
-    if (i % 2 == 0)
-        tr.classList.add('even');
-    else
-        tr.classList.add('odd');
-    tr.innerHTML = filmRowHTML;
-    tableDOM.appendChild(tr);
+function getPlaces(price) {
+    let places = [];
+    for (let i = 0; i < 10; ++i) {
+        places.push({
+            num: i + 1,
+            state: Math.random() > 0.5,
+            price: (i < 3 || i > 6? 100 : i == 5 || i == 6 ? 300 : price)
+        });
+    }
+    return places;
 }
 
-let mosaicDOM = document.getElementById("movies_container");
-for (let i = 0; i < filmsNew.length; i++) {
-    let currentFilm = filmsNew[i],
-        filmBlockHTML = film.renderFilmBlock.bind(currentFilm)(),
-        div = document.createElement("div");
+function checkPlace() {
+    return !this.state;
+}
 
+function pricePlace() {
+    return alert(`Стоимость билета ${this.price} р`);
+}
 
-    div.classList.add("movies-flex__card-wrapper");
-    div.innerHTML = filmBlockHTML;
-    mosaicDOM.appendChild(div);
+function selectPlace() {
+    this.state = true;
+    document.querySelector(".order-form-input[name=price]").value = this.price;
+    document.querySelector(".order-form-input[name=place]").value = this.num;
+}
+
+function colorPlace() {
+    this.DOM.classList.remove("order-form-seats-place--free")
+    this.DOM.classList.add("order-form-seats-place--selected")
+}
+
+function mouseOverPlace() {
+    this.DOM.classList.add("order-form-seats-place--mouseover")
 
 }
-    
+
+function mouseOutPlace() {
+    this.DOM.classList.remove("order-form-seats-place--mouseover")
+
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    //массивы для хранения отсортированных данных
+    let filmsNew = [],
+        filmsHire = [];
+
+    for (let i = 0; i < mock_Films.length; i++) {
+        let currentFilm = mock_Films[i];
+
+        if (currentFilm.filmHire) {
+            filmsHire.push(currentFilm);
+        }
+
+        if (currentFilm.filmNew) {
+            filmsNew.push(currentFilm);
+        }
+    }
+
+    let tableDOM = document.getElementById("movie-shedule");
+    for (let i = 0; i < filmsHire.length; i++) {
+        let currentFilm = filmsHire[i],
+            filmRowHTML = film.renderFilmRow.bind(currentFilm)(),
+            tr = document.createElement("tr");
+            tr.addEventListener("click", film.renderFilmOrder.bind(currentFilm));
+            tr.classList.add('movie-list__table__row');
+        if (i % 2 == 0)
+            tr.classList.add('even');
+        else
+            tr.classList.add('odd');
+        tr.innerHTML = filmRowHTML;
+        tableDOM.appendChild(tr);
+    }
+
+    let mosaicDOM = document.getElementById("movies_container");
+    for (let i = 0; i < filmsNew.length; i++) {
+        let currentFilm = filmsNew[i],
+            filmBlockHTML = film.renderFilmBlock.bind(currentFilm)(),
+            div = document.createElement("div");
+
+
+        div.classList.add("movies-flex__card-wrapper");
+        div.innerHTML = filmBlockHTML;
+        mosaicDOM.appendChild(div);
+
+    }
+        
     movies_container = $("#movies_container").owlCarousel({
         nav: true,
         navText: ["<i class='icon icon-left'></i>","<i class='icon icon-right'></i>"]
     });
+});

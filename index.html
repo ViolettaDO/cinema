@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="js/owlcarousel/css/owl.carousel.min.css">
     <link rel="stylesheet" href="js/owlcarousel/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="style/cinema_owlcarousel.css">
+    <script type="text/babel" src="js/film_mock.js"></script>  
 </head>
 <body>
     <!--Первый экран-->
@@ -148,7 +149,7 @@
         <div class="container">
             <div class="movie-list">
                 <h3 class="header movie-list__header">Выберите фильм</h3>
-                <table class="movie-list__table" cellpadding="0" cellspacing="0" >
+                <table class="movie-list__table" cellpadding="0" cellspacing="0" id="movie-shedule">
                     <colgroup>
                         <col class="movie-list__table__timeheader">
                         <col class="movie-list__table__movieheader">
@@ -165,13 +166,25 @@
                             <th class="movie-list__table__cell movie-list__table__cell_header">
                                 <a class="movie-list__table__header-sorting" href="#">
                                     Фильм
+                                     <i class="icon icon-sort-asc"></i>
                                 </a>
                             </th>
                             <th class="movie-list__table__cell movie-list__table__cell_header">
                                 Жанр
+                            </th> 
+                            <th class="movie-list__table__cell movie-list__table__cell_header">
+                                Цена
                             </th>
-                                                  
+                            <!--<th class="movie-list__table__cell movie-list__table__cell_header">
+                                Заказать
+                            </th>   
                         </tr>
+                        <tr class="movie-list__table__row odd">
+                            <td class="movie-list__table__cell movie-list__table__cell_body movie-list__table__cell_body_time">22:00</td>
+                            <td class="movie-list__table__cell movie-list__table__cell_body movie-list__table__cell_body_movieheader">Стрельцов</td>
+                            <td class="movie-list__table__cell movie-list__table__cell_body movie-list__table__cell_body_order">Драма</td>
+                            <td class="movie-list__table__cell movie-list__table__cell_body movie-list__table__cell_body_order"><button class="gift_panel__get" >Заказать</button></td>
+                        </tr> -->                       
                     </thead>
                     <tbody id="movie-shedule">
                     </tbody>
@@ -320,25 +333,37 @@
         <form class="order-form" action="?act=ticket">
             <div id="popup-close" class="close"><i class="icon icon-cross" title="cross"></i></div>
             <div class="modal__form">
+                <h4>Заказ билета</h4>
+                <div class="order-form-info">
+                    <p class="order-form-filmtitle"></p>
+                    <p class="order-form-filmgenre"></p>
+                    <p class="order-form-filmstart"></p>
+                    <p class="order-form-filmprice"></p>
+                </div>
+                <div class="order-form-seats"></div>
                 <div class="input-wrap">
-                      <input type="text" id="name" placeholder="Имя*" name="name" class="input-text">
+                      <input type="text" placeholder="Имя*" name="name" id="visitor_name" class="input-text">
                       <div class="popup-error-messager"></div>
                 </div> 
                 <div class="input-wrap">
-                    <select id="place" name="place" required="required" class="input-text input-select">  
-                        <option value="1">Выбор1</option>
-                        <option value="2">Выбор2</option>
-                        <option value="3">Выбор3</option>
-                    </select>
-                    <div class="popup-error-messager"></div>
+                      <input type="tel" placeholder="Телефон*" id="visitor_telephone" name="telephone" class="input-text">
+                      <div class="popup-error-messager"></div>
+                </div> 
+                <div class="input-wrap">
+                      <input type="number" placeholder="Цена*" id="visitor_price" name="price" class="order-form-input input-text" disabled>
+                      <div class="popup-error-messager"></div>
+                </div> 
+                <div class="input-wrap">
+                      <input type="text" placeholder="Место*" id="visitor_place" name="place" class="order-form-input input-text" disabled>
+                      <div class="popup-error-messager"></div>
                 </div>
                 <div class="input-wrap">
-                    <input type="checkbox" id="agree" name="agree" class="input-checkbox" required="required">
-                    <label for="agree"><i class="icon icon-check" title="check"></i> Я согласен на обработку персональных данных</label> 
+                    <input type="checkbox" id="visitor_agree" name="agree" class="input-checkbox" required="required">
+                    <label for="visitor_agree"><i class="icon icon-check" title="check"></i> Я согласен на обработку персональных данных</label> 
                     <div class="popup-error-messager"></div>
                 </div>
                 <div class="input-wrap" >
-                    <button class="button1" type="submit" id="submit">Отправить</button>
+                    <button class="button1" type="submit" id="sendForm">Отправить</button>
                 </div>
             </div>
         </form>
@@ -350,7 +375,9 @@
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="js/owlcarousel/js/owl.carousel.js"></script>
     <script src="js/owlcarousel/js/owl.navigation.js"></script>
-    <script type="text/babel" src="js/script.js"></script>
-    <script type="text/babel" src="js/film_mock.js"></script>
+    <script type="text/babel" src="js/script.js"></script>    
+    <script src="js/script.js"></script>
+    <script src="js/film_mock.js"></script>  
+    <script src="js/film.js"></script>
 </body>
 </html>

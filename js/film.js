@@ -189,7 +189,7 @@ let films = {
     }
 };
 
-let genres = [
+let genres_Array = [
     'приключения',
     'комедия',
     'мультфильм',
@@ -261,7 +261,7 @@ let shedule = {
                 <td class="movie-list__table__cell movie-list__table__cell_body movie-list__table__cell_body_movieheader">${c_mov.name}</td>
                 <td class="movie-list__table__cell movie-list__table__cell_body movie-list__table__cell_body_order">`;
             for (let j = 0; j < c_mov.genres.length; j++)    
-                h += genres[c_mov.genres[j]] + ` `;
+                h += genres_Array[c_mov.genres[j]] + ` `;
                 h += `</td>
             </tr>
             `;
@@ -269,3 +269,7 @@ let shedule = {
         }
     }
 }
+
+
+
+

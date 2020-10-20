@@ -593,7 +593,6 @@ a {
 }
 
 .modal__form {
-    max-width: 22.5rem;
     padding: 1.25rem;
 }
 
@@ -614,18 +613,18 @@ a {
     color: #000;
     display: block;
     position: absolute;
-    right: 20px;
+    right: 1rem;
     cursor: pointer;
  }
 
  .order-form{
     background: rgba(255, 255, 255);
-    border-radius: 14px;
+    border-radius: 1rem;
     box-shadow: 1px 0px 5px rgba(125, 125, 125);
     box-sizing: border-box;
-    height: 360px;
-    width: 320px;
-    padding: 20px;
+    height: 30rem;
+    width: 30rem;
+    padding: 1.5rem;
     margin: 150px auto;
     position: relative;
  }
@@ -646,7 +645,7 @@ a {
  .popup-error-messager{
      color: #cc0033;
      font-size:.9vw;
-     line-height: 28px;
+     line-height: 1.5rem;
  }
  .popup-error-messager{
     display: none;
@@ -702,4 +701,34 @@ a {
     transition: 0.2s;
     border: 0.1rem solid #90d23d;
     cursor: pointer;
+}
+
+.order-form-seats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.order-form-seats-place {
+    width: 2rem;
+    height: 2rem;
+    margin: 0.1rem;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 0.3rem;
+    line-height: 2rem;
+    text-align: center;
+}
+
+.order-form-seats-place--busy {
+    background-color:  #ffa500;
+}
+.order-form-seats-place--selected {
+    background-color:  #ffa500;
+}
+.order-form-seats-place--free {
+    background-color:  #a3cc40;
+}
+.order-form-seats-place--mouseover {
+    background-color:  #4b4d4f;
 }
