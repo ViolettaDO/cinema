@@ -732,3 +732,12 @@ a {
 .order-form-seats-place--mouseover {
     background-color:  #4b4d4f;
 }
+.ajax-loader{
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, .8);
+    z-index: 1000000;
+}

@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="js/owlcarousel/css/owl.carousel.min.css">
     <link rel="stylesheet" href="js/owlcarousel/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="style/cinema_owlcarousel.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
     <script type="text/babel" src="js/film_mock.js"></script>  
 </head>
 <body>
@@ -35,12 +39,12 @@
                     </ul>
                 </nav>
                 <div class="screen-1__header__location">
-                    Ваш город: <u>Иннополис</u>
+                    Ваш город: <u><a href="#" id="city_name">--Не определен--</a></u>
                 </div>
                 <div class="clear"></div>
             </header>
             <div class="screen-1__welcome">
-                <h1 class="screen-1__welcome__h1">Закажите билет в кино</h1>
+                <h1 class="screen-1__welcome__h1">Закажите билет в кино.</h1>
                 <h2 class="screen-1__welcome__h2">Всем покупателям подарок!</h2>
             </div>
         </div>
@@ -101,7 +105,7 @@
                         and become successful.
                     </p>
                 </article>
-                <div class="clear benefits__new-row"></div>
+                <!--<div class="clear benefits__new-row"></div>
                 <article class="benefits__screen">
                     <div class="benefits__image">
                         <img class="benefits__image__screen" src="img/b2_icon_1.jpg" alt="Большие экраны"/>
@@ -140,7 +144,7 @@
                 </article>
                 <div class="clear"></div>
             </div>    
-        </div>   
+        </div>-->   
     </section> 
     <!--Конец второго экрана--> 
 
@@ -339,6 +343,7 @@
                     <p class="order-form-filmgenre"></p>
                     <p class="order-form-filmstart"></p>
                     <p class="order-form-filmprice"></p>
+                    <p class="order-form-shipprice"></p>
                 </div>
                 <div class="order-form-seats"></div>
                 <div class="input-wrap">
@@ -368,16 +373,21 @@
             </div>
         </form>
     </div>
-
+    <div id="choose_city">
+        <div><input type="text" name="city_choose"></div>
+        <div id="search_result"></div>
+    </div>
     <div id="output"></div>
-<!-- Load Babel -->
-<!-- v6 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <div class="ajax-loader"></div>
+    <!-- Load Babel -->
+    <!-- v6 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="js/owlcarousel/js/owl.carousel.js"></script>
     <script src="js/owlcarousel/js/owl.navigation.js"></script>
     <script type="text/babel" src="js/script.js"></script>    
     <script src="js/script.js"></script>
     <script src="js/film_mock.js"></script>  
     <script src="js/film.js"></script>
+    <script src="js/ajax.js"></script>
 </body>
 </html>
